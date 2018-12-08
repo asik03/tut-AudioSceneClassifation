@@ -19,4 +19,4 @@ All the proposed are spectral features based, to extract them we will use the py
 Our CNN model is based in [this reference](http://www.cs.tut.fi/sgn/arg/dcase2017/documents/challenge_technical_reports/DCASE2017_Han_207.pdf "CNN"), 
 and it is as follows
 
-![alt text](https://bitbucket.org/tut4win/audio-scene-classifier/src/master/docs/images/CNN_model.png "CNN model")
+![alt text](./docs/images/CNN_model.png?raw=true "CNN model")
