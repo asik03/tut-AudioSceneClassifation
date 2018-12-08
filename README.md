@@ -16,7 +16,7 @@ We will train different networks using the following features, and we will prese
 
 All the proposed are spectral features based, to extract them we will use the python library [librosa](https://librosa.github.io/librosa/feature.html#spectral-features "librosa").
 
-[Todo] Detail the dimension of each transformation.
+[Todo] Detail each transformation.
 
 ## Convolutional Neural Network
 
