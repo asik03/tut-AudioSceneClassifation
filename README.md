@@ -7,7 +7,7 @@ We will train different networks using the following features, and we will prese
 1. Mel spectogram: Mel-scaled power spectogram
 2. MFCC: Mel-Frequency Cepstral Coefficients
 3. Chroma STFT: Chromagram from a waveform or power spectrogram
-4. Chorma CQT: Constant-Q chromagram
+4. Chroma CQT: Constant-Q chromagram
 5. Spectral Contrast: Spectral contrast
 
 All the proposed are spectral features based, to extract them we will use the python library [librosa](https://librosa.github.io/librosa/feature.html#spectral-features "librosa").
