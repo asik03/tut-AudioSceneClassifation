@@ -58,7 +58,8 @@ class FeaturesGenerator(keras.utils.Sequence):
         list_x = []
         list_y = []
         for i, file_name in enumerate(file_names_temp):
-            data, fs = librosa.load(os.path.join(self.data_dir, file_name))
+            # It will convert to mono
+            data, fs = librosa.load(os.path.join(self.data_dir, file_name), sr=None)
 
             if self.method == 'mfcc':
                 x_i = librosa.feature.mfcc(y=data, sr=fs, n_mfcc=self.n_features)
