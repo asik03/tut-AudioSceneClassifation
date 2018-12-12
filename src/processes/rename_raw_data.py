@@ -17,10 +17,12 @@ if __name__ == '__main__':
     audio_labels = []
 
     for count, line in enumerate(open(meta_file)):
+        line = line.replace(' ', '\t')
         a = line.split("\t")
         b = a[0].split("/")
         audio_names.append(b[1])
         audio_labels.append(a[1])
+
     raw_data_audio_dir = os.path.join(raw_data_dir, "audio\\")
     file_names = os.listdir(raw_data_audio_dir)
     file_names = list(filter(lambda x: x.endswith('.wav'), file_names))
