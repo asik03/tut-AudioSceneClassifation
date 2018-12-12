@@ -1,21 +1,23 @@
 import os
 import numpy as np
 import keras
+import librosa
 
 
 class FeaturesGenerator(keras.utils.Sequence):
     """Generates data for Keras"""
 
-    def __init__(self, data_dir, labels, batch_size=32, n_classes=15, shuffle=True, method='mfcc'):
+    def __init__(self, data_dir, labels, batch_size=32, n_classes=15, shuffle=True, method='mfcc', n_features=20):
         """Initialization"""
         self.batch_size = batch_size
-        self.labels = labels
         self.data_dir = data_dir
         self.n_classes = n_classes
         self.shuffle = shuffle
         self.file_names = self.__get_file_names()
+        self.labels = labels
         self.indexes = self.__get_indexes()
         self.method = method
+        self.n_features = n_features
 
     def __get_file_names(self):
         file_names = os.listdir(self.data_dir)
@@ -38,11 +40,11 @@ class FeaturesGenerator(keras.utils.Sequence):
         # Generate indexes of the batch
         indexes = self.indexes[index * self.batch_size: (index + 1) * self.batch_size]
 
-        # Find list of IDs
-        # list_ids_temp = [self.list_ids[k] for k in indexes]
+        # Find list of file names
+        file_names_temp = [self.file_names[k] for k in indexes]
 
         # Generate data
-        # x, y = self.__data_generation(list_ids_temp)
+        x, y = self.__data_generation(file_names_temp)
 
         return x, y
 
@@ -50,9 +52,33 @@ class FeaturesGenerator(keras.utils.Sequence):
         """Updates indexes after each epoch"""
         self.indexes = self.__get_indexes()
 
-    def __data_generation(self, list_ids_temp):
+    def __data_generation(self, file_names_temp):
         """Generates data containing batch_size samples"""
-        # X : (n_samples, *dim, n_channels)
-        # Initialization
 
-        # return x, keras.utils.to_categorical(y, num_classes=self.n_classes)
+        list_x = []
+        list_y = []
+        for i, file_name in enumerate(file_names_temp):
+            data, fs = librosa.load(os.path.join(self.data_dir, file_name))
+
+            if self.method == 'mfcc':
+                x_i = librosa.feature.mfcc(y=data, sr=fs, n_mfcc=self.n_features)
+            elif self.method == 'chroma_cqt':
+                x_i = librosa.feature.chroma_cqt(y=data, sr=fs, n_chroma=self.n_features)
+            elif self.method == 'both':
+                mfcc = librosa.feature.mfcc(y=data, sr=fs, n_mfcc=self.n_features)
+                chroma = librosa.feature.chroma_cqt(y=data, sr=fs, n_chroma=self.n_features)
+                x_i = np.concatenate((mfcc, chroma), axis=1)
+            else:
+                raise Exception('Method not recognized')
+
+            class_name = file_name.split('-')[-1].split('.')[0]
+
+            y_i = self.labels.index(class_name)
+
+            list_x.append(x_i)
+            list_y.append(y_i)
+
+        x = np.stack(list_x, axis=0)
+        y = np.asarray(list_y)
+
+        return x, keras.utils.to_categorical(y, num_classes=self.n_classes)
