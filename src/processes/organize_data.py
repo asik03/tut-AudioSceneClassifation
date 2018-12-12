@@ -13,7 +13,7 @@ if __name__ == '__main__':
     percentage_val = 0.1
 
     file_names = os.listdir(raw_data_dir)
-    labels = ['bus', 'cafe/restaurant', 'beach', 'city_center', 'forest_path', 'car', 'grocery_store', 'home',
+    labels = ['bus', 'cafe_restaurant', 'beach', 'city_center', 'forest_path', 'car', 'grocery_store', 'home',
               'library', 'metro_station', 'office', 'park', 'residential_area', 'train', 'tram']
 
     file_names_classes = {}
