@@ -28,8 +28,8 @@ if __name__ == '__main__':
     scene_network = SceneNetwork()
     scene_network.build_model(input_shape)
 
-    scene_network.train_model(train_generator=train_generator,
-                              validation_generator=validation_generator)
+    scene_network.train_model_generator(train_generator=train_generator,
+                                        validation_generator=validation_generator)
 
     scene_network.save_model('./etc/models/model.h5')
-    scene_network.evaluate_model(evaluate_generator=evaluation_generator)
+    scene_network.evaluate_model_generator(evaluate_generator=evaluation_generator)

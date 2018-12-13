@@ -5,6 +5,8 @@ from keras.layers import BatchNormalization
 from keras.layers import GlobalAveragePooling2D
 from keras.optimizers import adam
 
+import matplotlib.pyplot as plt
+
 
 class SceneNetwork:
     def __init__(self):
@@ -44,12 +46,42 @@ class SceneNetwork:
         self.model.add(Activation('relu'))
         self.model.add(Conv2D(n_filters, (3, 3), padding='same'))
 
-    def train_model(self, train_generator, validation_generator=None, epochs=50):
+    def train_model(self, x_train, y_train, x_val, y_val, batch_size=32, epochs=50):
+        history = self.model.fit(x_train, y_train,
+                                 batch_size=batch_size,
+                                 epochs=epochs,
+                                 shuffle=True,
+                                 validation_data=(x_val, y_val))
+        # list all data in history
+        print(history.history.keys())
+        # summarize history for accuracy
+        plt.plot(history.history['acc'])
+        plt.plot(history.history['val_acc'])
+        plt.title('model accuracy')
+        plt.ylabel('accuracy')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left')
+        plt.show()
+        # summarize history for loss
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left')
+        plt.show()
+
+    def evaluate_model(self, x_eval, y_eval):
+        scores = self.model.evaluate(x_eval, y_eval, verbose=1)
+        print('Test loss:', scores[0])
+        print('Test accuracy:', scores[1])
+
+    def train_model_generator(self, train_generator, validation_generator=None, epochs=50):
         self.model.fit_generator(generator=train_generator,
                                  validation_data=validation_generator,
                                  epochs=epochs)
 
-    def evaluate_model(self, evaluate_generator):
+    def evaluate_model_generator(self, evaluate_generator):
         scores = self.model.evaluate_generator(generator=evaluate_generator,
                                                verbose=1)
         print('Test loss:', scores[0])
