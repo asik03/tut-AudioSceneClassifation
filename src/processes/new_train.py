@@ -14,7 +14,7 @@ if __name__ == '__main__':
     sampling_rate = 44100.0
     hop_size = 512.0
     time_duration = 10.0
-    t_dim = int(time_duration * sampling_rate / hop_size)
+    t_dim = int(time_duration * sampling_rate / hop_size) + 1
 
     n_features = 20
 
