@@ -24,13 +24,13 @@ if __name__ == '__main__':
     evaluation_loader = FeaturesLoader(evaluation_dir, labels, n_features=n_features)
 
     x_train, y_train = train_loader.get_data()
-    with open(os.path.join(pickle_dir, train_pickle_name, 'w')) as f:
+    with open(os.path.join(pickle_dir, train_pickle_name), 'w') as f:
         pickle.dump((x_train, y_train), f)
 
     x_val, y_val = validation_loader.get_data()
-    with open(os.path.join(pickle_dir, validation_pickle_name, 'w')) as f:
+    with open(os.path.join(pickle_dir, validation_pickle_name), 'w') as f:
         pickle.dump((x_val, y_val), f)
 
     x_eval, y_eval = evaluation_loader.get_data()
-    with open(os.path.join(pickle_dir, evaluation_pickle_name, 'w')) as f:
+    with open(os.path.join(pickle_dir, evaluation_pickle_name), 'w') as f:
         pickle.dump((x_eval, y_eval), f)
