@@ -25,7 +25,7 @@ class FeaturesLoader:
         list_y = []
         print('Processing ' + str(len(self.file_names)) + ' audio files')
         for counter, file_name in enumerate(self.file_names):
-            if counter % 100:
+            if counter % 100 == 0:
                 print('Processed ' + str(counter) + ' audio files out of ' + str(len(self.file_names)))
             # It will convert to mono
             data, fs = librosa.load(os.path.join(self.data_dir, file_name), sr=None)
