@@ -1,6 +1,6 @@
 import os
 import numpy as np
-import keras
+from keras.utils import to_categorical
 import librosa
 
 
@@ -52,4 +52,4 @@ class FeaturesLoader:
         x = x[:, :, :, np.newaxis]
         y = np.asarray(list_y)
 
-        return x, keras.utils.to_categorical(y, num_classes=self.n_classes)
+        return x, to_categorical(y, num_classes=self.n_classes)
