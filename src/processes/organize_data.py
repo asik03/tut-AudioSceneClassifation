@@ -3,10 +3,10 @@ import random
 import shutil
 
 if __name__ == '__main__':
-    raw_data_dir = './etc/raw_data'
-    train_data_dir = './etc/train'
-    validation_data_dir = './etc/validation'
-    evaluation_data_dir = './etc/evaluation'
+    raw_data_dir = './etc/raw_data/audio'
+    train_data_dir = 'D:\\UNIVERSIDAD\\MASTER\\(2) SEGUNDO\\Advanced Signal Processing Laboratory\\AUDIO\\etc\\train'
+    validation_data_dir = 'D:\\UNIVERSIDAD\\MASTER\\(2) SEGUNDO\\Advanced Signal Processing Laboratory\\AUDIO\\etc\\validation'
+    evaluation_data_dir = 'D:\\UNIVERSIDAD\\MASTER\\(2) SEGUNDO\\Advanced Signal Processing Laboratory\\AUDIO\\etc\\evaluation'
 
     percentage_eval = 0.2
     percentage_train = 0.7
@@ -25,14 +25,14 @@ if __name__ == '__main__':
         n_examples_train = int(percentage_train * n_examples)
         n_examples_val = n_examples - n_examples_eval - n_examples_train
 
-        indexes = range(n_examples)
+        indexes = list(range(n_examples))
         random.shuffle(indexes)
 
         indexes_eval = indexes[0:n_examples_eval]
         indexes_train = indexes[n_examples_eval:n_examples_train]
         indexes_val = indexes[n_examples_eval + n_examples_train:]
 
-        for indexes, path in zip((indexes_eval, indexes_train, indexes_val),
+        for indexes_i, path in zip((indexes_eval, indexes_train, indexes_val),
                                  (evaluation_data_dir, train_data_dir, validation_data_dir)):
-            for index in indexes:
-                shutil.copyfile(os.path.join(raw_data_dir, file_names_classes[label][index]), path)
+            for index in indexes_i:
+                shutil.copy(os.path.join(raw_data_dir, file_names_classes[label][index]), path)

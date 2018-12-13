@@ -23,6 +23,8 @@ if __name__ == '__main__':
         audio_names.append(b[1])
         audio_labels.append(a[1])
 
+    audio_labels = [label.replace('/', '_') for label in audio_labels]
+
     raw_data_audio_dir = os.path.join(raw_data_dir, "audio\\")
     file_names = os.listdir(raw_data_audio_dir)
     file_names = list(filter(lambda x: x.endswith('.wav'), file_names))

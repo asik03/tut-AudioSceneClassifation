@@ -21,7 +21,7 @@ class FeaturesGenerator(keras.utils.Sequence):
 
     def __get_file_names(self):
         file_names = os.listdir(self.data_dir)
-        file_names = list(filter(lambda x: x.ends_with('.wav'), file_names))
+        file_names = list(filter(lambda x: x.endswith('.wav'), file_names))
 
         return file_names
 
@@ -80,6 +80,7 @@ class FeaturesGenerator(keras.utils.Sequence):
             list_y.append(y_i)
 
         x = np.stack(list_x, axis=0)
+        x = x[:, :, :, np.newaxis]
         y = np.asarray(list_y)
 
         return x, keras.utils.to_categorical(y, num_classes=self.n_classes)
