@@ -6,7 +6,6 @@ if __name__ == '__main__':
     validation_dir = 'D:\\UNIVERSIDAD\\MASTER\\(2) SEGUNDO\\Advanced Signal Processing Laboratory\\AUDIO\\etc\\validation'
     evaluation_dir = 'D:\\UNIVERSIDAD\\MASTER\\(2) SEGUNDO\\Advanced Signal Processing Laboratory\\AUDIO\\etc\\evaluation'
 
-
     labels = ['bus', 'cafe_restaurant', 'beach', 'city_center', 'forest_path', 'car', 'grocery_store', 'home',
               'library', 'metro_station', 'office', 'park', 'residential_area', 'train', 'tram']
 
@@ -19,7 +18,7 @@ if __name__ == '__main__':
 
     n_features = 20
 
-    input_shape = (batch_size, n_features, t_dim)
+    input_shape = (n_features, t_dim, 1)
 
     train_loader = FeaturesLoader(train_dir, labels, n_features=n_features)
     validation_loader = FeaturesLoader(validation_dir, labels, n_features=n_features)
