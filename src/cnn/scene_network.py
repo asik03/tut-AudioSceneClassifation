@@ -4,6 +4,9 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import BatchNormalization
 from keras.layers import GlobalAveragePooling2D
 from keras.optimizers import adam
+import sklearn.metrics as metrics
+import numpy as np
+
 
 import matplotlib.pyplot as plt
 
@@ -75,6 +78,10 @@ class SceneNetwork:
         scores = self.model.evaluate(x_eval, y_eval, verbose=1)
         print('Test loss:', scores[0])
         print('Test accuracy:', scores[1])
+        y_pred = self.model.predict_classes(x_eval, batch_size=32, verbose=1)
+        y_real = np.argmax(y_eval, axis=1)
+        matrix = metrics.confusion_matrix(y_real, y_pred)
+        print(matrix)
 
     def train_model_generator(self, train_generator, validation_generator=None, epochs=50):
         self.model.fit_generator(generator=train_generator,
